@@ -16,8 +16,9 @@ daniele.bianco@f-secure.com | daniele@inversepath.com
 Introduction
 ============
 
-The `armoryctl` tool provides user space support for communicating with the USB
-armory Mk II internal peripherals.
+The `armoryctl` tool provides user space support for communicating with the
+[USB armory Mk II](https://github.com/inversepath/usbarmory/wiki) internal
+peripherals.
 
 The function leveraged by the tool are all exported to allow use of the package
 as a library.
