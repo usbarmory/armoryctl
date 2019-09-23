@@ -16,7 +16,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/albenik/go-serial"
+	"github.com/albenik/go-serial/v2"
 )
 
 func checkUART(path string) (err error) {
@@ -34,7 +34,7 @@ func UARTWrite(path string, speed int, cmd string) (res string, err error) {
 		return
 	}
 
-	port, err := serial.Open(path, &serial.Mode{BaudRate: speed})
+	port, err := serial.Open(path, serial.WithBaudrate(speed))
 
 	if err != nil {
 		return
