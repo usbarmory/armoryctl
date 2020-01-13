@@ -45,6 +45,9 @@ const bootloaderOffset = 0x78000
 const softDeviceCRCOffset = 0x7e000
 const flashSize = 512 * 1024
 
+// CUSTOMER[31] offset in the nrf52 UICR memory region
+const customer31Offset = 0x0fc
+
 const readFlashTemplate = `
 init;
 flash read_bank nrf52.flash _FLASH_FILE_;
@@ -311,7 +314,7 @@ func patchUICR(inputPath string) (outputPath string, err error) {
 
 	outputPath = inputPath + "-patched"
 
-	copy(uicr[len(uicr)-4:], []byte{0x80, 0x04, 0x00, 0x80})
+	copy(uicr[customer31Offset:], []byte{0x80, 0x04, 0x00, 0x80})
 	err = ioutil.WriteFile(outputPath, uicr[:], 0644)
 
 	return
