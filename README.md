@@ -1,7 +1,7 @@
 USB armory Mk II - hardware control tool
 ========================================
 
-armoryctl | https://github.com/inversepath/armoryctl  
+armoryctl | https://github.com/f-secure-foundry/armoryctl  
 Copyright (c) F-Secure Corporation
 
 Authors
@@ -17,7 +17,7 @@ Introduction
 ============
 
 The `armoryctl` tool provides user space support for communicating with the
-[USB armory Mk II](https://github.com/inversepath/usbarmory/wiki) internal
+[USB armory Mk II](https://github.com/f-secure-foundry/usbarmory/wiki) internal
 peripherals.
 
 The function leveraged by the tool are all exported to allow use of the package
@@ -51,7 +51,7 @@ Requirements
 ============
 
 The `ble rc_lfck flash` and `ble update` commands require the `openocd` tool
-compiled with the `-enable-imx_gpio` flag ([compilation instructions](https://github.com/inversepath/usbarmory/wiki/Bluetooth#using-openocd-for-jtag-access)).
+compiled with the `-enable-imx_gpio` flag ([compilation instructions](https://github.com/f-secure-foundry/usbarmory/wiki/Bluetooth#using-openocd-for-jtag-access)).
 
 Operation
 =========
@@ -121,13 +121,13 @@ You can automatically download, compile and install the package, under your
 GOPATH, as follows:
 
 ```
-go get github.com/inversepath/armoryctl
+go get github.com/f-secure-foundry/armoryctl
 ```
 
 Alternatively you can manually compile it from source:
 
 ```
-git clone https://github.com/inversepath/armoryctl
+git clone https://github.com/f-secure-foundry/armoryctl
 cd armoryctl && make
 ```
 
@@ -142,7 +142,7 @@ The default compilation target automatically runs all available unit tests.
 License
 =======
 
-armoryctl | https://github.com/inversepath/armoryctl  
+armoryctl | https://github.com/f-secure-foundry/armoryctl  
 Copyright (c) F-Secure Corporation
 
 This program is free software: you can redistribute it and/or modify it under

@@ -1,4 +1,4 @@
-// armoryctl | https://github.com/inversepath/armoryctl
+// armoryctl | https://github.com/f-secure-foundry/armoryctl
 //
 // USB armory Mk II - hardware control tool
 // Copyright (c) F-Secure Corporation
@@ -8,7 +8,7 @@
 //
 // Links:
 //   http://ww1.microchip.com/downloads/en/DeviceDoc/ATECC608A-CryptoAuthentication-Device-Summary-Data-Sheet-DS40001977B.pdf
-//   https://github.com/inversepath/usbarmory/wiki/I%C2%B2C-(Mk-II)
+//   https://github.com/f-secure-foundry/usbarmory/wiki/I%C2%B2C-(Mk-II)
 
 package atecc608a
 
@@ -17,7 +17,7 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/inversepath/armoryctl/internal"
+	"github.com/f-secure-foundry/armoryctl/internal"
 )
 
 // I2C bus number

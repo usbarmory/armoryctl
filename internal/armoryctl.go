@@ -1,4 +1,4 @@
-// armoryctl | https://github.com/inversepath/armoryctl
+// armoryctl | https://github.com/f-secure-foundry/armoryctl
 // USB armory Mk II - hardware control tool
 //
 // Copyright (c) F-Secure Corporation

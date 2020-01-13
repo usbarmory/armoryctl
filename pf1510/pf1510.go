@@ -1,4 +1,4 @@
-// armoryctl | https://github.com/inversepath/armoryctl
+// armoryctl | https://github.com/f-secure-foundry/armoryctl
 //
 // USB armory Mk II - hardware control tool
 // Copyright (c) F-Secure Corporation
@@ -8,14 +8,14 @@
 //
 // Links:
 //   https://www.nxp.com/docs/en/data-sheet/PF1510.pdf
-//   https://github.com/inversepath/usbarmory/wiki/I%C2%B2C-(Mk-II)
+//   https://github.com/f-secure-foundry/usbarmory/wiki/I%C2%B2C-(Mk-II)
 
 package pf1510
 
 import (
 	"fmt"
 
-	"github.com/inversepath/armoryctl/internal"
+	"github.com/f-secure-foundry/armoryctl/internal"
 )
 
 // I2C bus number
