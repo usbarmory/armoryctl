@@ -50,20 +50,20 @@ The use of this tool is therefore **at your own risk**.
 `
 
 const commandUsage = `
-LED control:
+LED control
   led (white|blue) (on|off)
 
-Type-C plug port controller (TUSB320):
+Type-C plug port controller (TUSB320)
   tusb id			# read controller identifier
   tusb current_mode		# read advertised current
 
-Type-C receptacle port controller (FUSB303):
+Type-C receptacle port controller (FUSB303)
   fusb id			# read controller identifier
   fusb current_mode		# read advertised current
   fusb enable			# enable the controller
   fusb disable			# disable the controller
 
-Bluetooth module (ANNA-B112):
+Bluetooth module (ANNA-B112)
   ble info			# read device information
   ble enable			# set visible peripheral BLE role
   ble disable			# disable BLE communication
@@ -73,11 +73,11 @@ Bluetooth module (ANNA-B112):
   ble rc_lfck (flash|at)	# set LF clock source to internal RC oscillator
   ble update <firmware path>	# module firmware update
 
-Secure Element #1 (ATECC608A):
+Secure Element #1 (ATECC608A)
   se1 info			# read device information
   se1 self_test			# execute self test procedure
 
-Power Management Integrated Circuit (PF1510):
+Power Management Integrated Circuit (PF1510)
   pmic info			# read device information
 `
 
