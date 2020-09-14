@@ -126,9 +126,9 @@ func Reset() (err error) {
 
 // Toggle BLE visibility to non discoverable (AT+UBTDM=1), non pairable
 // (AT+UBTPM=1), non connectable (AT+UBTCM=1) and disable any BLE role
-// (AT+UBTLE=0), finally permanently store current configuration (AT&W).
+// (AT+UBTLE=0), finally permanently store current configuration (AT&W, AT+CPWROFF).
 func Disable() (err error) {
-	cmds := [5]string{"+UBTDM=1", "+UBTPM=1", "+UBTCM=1", "+UBTLE=0", "&W"}
+	cmds := [6]string{"+UBTDM=1", "+UBTPM=1", "+UBTCM=1", "+UBTLE=0", "&W", "+CPWROFF"}
 
 	for _, cmd := range cmds {
 		_, err = sendATCmd(cmd)
@@ -143,9 +143,9 @@ func Disable() (err error) {
 
 // Toggle BLE visibility to always discoverable (AT+UBTDM=3), pairable
 // (AT+UBTPM=2), connectable (AT+UBTCM=2) and set BLE role to peripheral
-// (AT+UBTLE=2), finally permanently store current configuration (AT&W).
+// (AT+UBTLE=2), finally permanently store current configuration (AT&W, AT+CPWROFF).
 func Enable() (err error) {
-	cmds := [5]string{"+UBTDM=3", "+UBTPM=2", "+UBTCM=2", "+UBTLE=2", "&W"}
+	cmds := [6]string{"+UBTDM=3", "+UBTPM=2", "+UBTCM=2", "+UBTLE=2", "&W", "+CPWROFF"}
 
 	for _, cmd := range cmds {
 		_, err = sendATCmd(cmd)
