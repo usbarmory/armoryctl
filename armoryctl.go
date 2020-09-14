@@ -72,6 +72,7 @@ Bluetooth module (ANNA-B112)
   ble normal_mode		# switch to normal operation
   ble rc_lfck (flash|at)	# set LF clock source to internal RC oscillator
   ble update <firmware path>	# module firmware update
+  ble name "<device name>"	# set device name: UTF-8 string, maximum 31 bytes
 
 Secure Element #1 (ATECC608A)
   se1 info			# read device information
@@ -256,6 +257,12 @@ func main() {
 		}
 
 		err = anna_b112.Update(flag.Arg(2))
+	case "ble name":
+		if len(flag.Args()) < 3 {
+			invalid()
+		}
+
+		err = anna_b112.SetDeviceName(flag.Arg(2))
 	case "se1 info":
 		res, err = atecc608a.Info()
 	case "se1 self_test":

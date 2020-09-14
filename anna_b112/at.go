@@ -72,6 +72,22 @@ func GetDeviceName() (name string, err error) {
 	return sendATCmd("+UBTLN?")
 }
 
+// Set Bluetooth device name (AT+UBTLN="device name") and parmanently store
+// the current configuration (AT+&W, AT+CPWROFF).
+func SetDeviceName(name string) (err error) {
+	cmds := [3]string{"+UBTLN=\""+name+"\"", "&W", "+CPWROFF"}
+
+	for _, cmd := range cmds {
+		_, err = sendATCmd(cmd)
+
+		if err != nil {
+			return
+		}
+	}
+
+	return
+}
+
 // Assemble the device identification string from device manufacturer, model,
 // product serial, software version and Bluetooth device name.
 func Info() (id string, err error) {
