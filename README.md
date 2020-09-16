@@ -105,7 +105,7 @@ Bluetooth module (ANNA-B112)
   ble normal_mode		# switch to normal operation
   ble rc_lfck (flash|at)	# set LF clock source to internal RC oscillator
   ble update <firmware path>	# module firmware update
-  ble name "<device name>"	# set device name: UTF-8 string, maximum 31 bytes
+  ble name <device name>	# set device name
 
 Secure Element #1 (ATECC608A)
   se1 info			# read device information

@@ -16,6 +16,7 @@ import (
 	"errors"
 	"fmt"
 	"regexp"
+	"strings"
 	"time"
 
 	"github.com/f-secure-foundry/armoryctl/internal"
@@ -75,6 +76,14 @@ func GetDeviceName() (name string, err error) {
 // Set Bluetooth device name (AT+UBTLN="device name") and parmanently store
 // the current configuration (AT+&W, AT+CPWROFF).
 func SetDeviceName(name string) (err error) {
+	if len(name) > 31 {
+		return errors.New("name must be a valid UTF-8 string no longer than 31 bytes")
+	}
+
+	if strings.Contains(name, `"`) {
+		return errors.New(`name cannot contain " characters`)
+	}
+
 	cmds := [3]string{"+UBTLN=\""+name+"\"", "&W", "+CPWROFF"}
 
 	for _, cmd := range cmds {
