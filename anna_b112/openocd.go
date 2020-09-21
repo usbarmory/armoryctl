@@ -171,7 +171,7 @@ func prepareImage(path string, output string) (err error) {
 		return
 	}
 
-	// The update configuration file in u-connect v2.0.0-065 boundle
+	// The update configuration file in u-connect v2.0.0-065 bundle
 	// includes invalid JSON, we detect and patch it.
 	invalidJSONPattern := regexp.MustCompile(`("Version": ".+"),(\r\s+})`)
 	j = []byte(invalidJSONPattern.ReplaceAllString(string(j), "$1$2"))
@@ -328,8 +328,8 @@ func execOpenOCD(flashPath string, uicrPath string, template string, retry bool)
 	}
 	defer func() { _ = os.RemoveAll(tmpDir) }() // make errcheck happy
 
-	cmd := strings.ReplaceAll(template, "_FLASH_FILE_", flashPath)
-	cmd = strings.ReplaceAll(cmd, "_UICR_FILE_", uicrPath)
+	cmd := strings.Replace(template, "_FLASH_FILE_", flashPath, -1)
+	cmd = strings.Replace(cmd, "_UICR_FILE_", uicrPath, -1)
 
 	args := []string{"-f", interfacePath, "-f", transportPath, "-c", cmd}
 
