@@ -82,6 +82,8 @@ Usage: armoryctl [options] [command]
     	ANNA-B112 UART speed (default 115200)
   -u string
     	ANNA-B112 UART path (default "/dev/ttymxc0")
+  -x string
+    	OpenOCD lookpath (default "openocd")
 
 LED control
   led (white|blue) (on|off)
