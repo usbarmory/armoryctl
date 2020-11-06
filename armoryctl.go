@@ -75,8 +75,8 @@ Bluetooth module (ANNA-B112)
   ble name <device name>	# set device name
 
 Secure Element #1 (ATECC608A)
-  se1 info			# read device information
-  se1 self_test			# execute self test procedure
+  atecc info			# read device information
+  atecc self_test		# execute self test procedure
 
 Power Management Integrated Circuit (PF1510)
   pmic info			# read device information
@@ -263,9 +263,9 @@ func main() {
 		}
 
 		err = anna_b112.SetDeviceName(flag.Arg(2))
-	case "se1 info":
+	case "atecc info":
 		res, err = atecc608a.Info()
-	case "se1 self_test":
+	case "atecc self_test":
 		res, err = atecc608a.SelfTest()
 	case "pmic info":
 		res, err = pf1510.Info()

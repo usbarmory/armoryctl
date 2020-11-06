@@ -110,8 +110,8 @@ Bluetooth module (ANNA-B112)
   ble name <device name>	# set device name
 
 Secure Element #1 (ATECC608A)
-  se1 info			# read device information
-  se1 self_test			# execute self test procedure
+  atecc info			# read device information
+  atecc self_test		# execute self test procedure
 
 Power Management Integrated Circuit (PF1510)
   pmic info			# read device information
