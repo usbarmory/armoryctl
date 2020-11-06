@@ -28,22 +28,27 @@ import (
 	"github.com/f-secure-foundry/armoryctl/internal"
 )
 
-// Directory to optionally save backed up and written firmware images.
-var CachePath = ""
+var (
+	// Directory to optionally save backed up and written firmware images.
+	CachePath = ""
 
-// OpenOCD binary path, if the path contains a slash it is tried directly,
-// otherwise it is searched in the directories named by the PATH environment
-// variable.
-var OpenOCDPath = "openocd"
+	// OpenOCD binary path, if the path contains a slash it is tried
+	// directly, otherwise it is searched in the directories named by the
+	// PATH environment variable.
+	OpenOCDPath = "openocd"
+)
 
-const updateConfig = "ANNA-B112-CF-*.json"
-const updateManifest = "manifest.json"
+const (
+	updateConfig   = "ANNA-B112-CF-*.json"
+	updateManifest = "manifest.json"
+)
 
-// These are fixed offsets that are not extracted from the update
-// configuration.
-const bootloaderOffset = 0x78000
-const softDeviceCRCOffset = 0x7e000
-const flashSize = 512 * 1024
+// Fixed offsets not extracted from the update configuration.
+const (
+	bootloaderOffset    = 0x78000
+	softDeviceCRCOffset = 0x7e000
+	flashSize           = 512 * 1024
+)
 
 // CUSTOMER[31] offset in the nrf52 UICR memory region
 const customer31Offset = 0x0fc

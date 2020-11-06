@@ -16,11 +16,10 @@ import (
 	"github.com/f-secure-foundry/armoryctl/internal"
 )
 
-// I2C bus number
-var I2CBus = 0
-
-// I2C address
-var I2CAddress = 0x61
+var (
+	I2CBus     = 0
+	I2CAddress = 0x61
+)
 
 // Current mode values and meaning (SSLSEN9E, Table 7).
 var CurrentMode = map[byte]string{

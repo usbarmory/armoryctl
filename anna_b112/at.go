@@ -22,11 +22,12 @@ import (
 	"github.com/f-secure-foundry/armoryctl/internal"
 )
 
-// Serial device path
-var UARTPath = "/dev/ttymxc0"
-
-// Serial device speed
-var UARTSpeed = 115200
+var (
+	// Serial device path
+	UARTPath = "/dev/ttymxc0"
+	// Serial device speed
+	UARTSpeed = 115200
+)
 
 var responseStringPattern = regexp.MustCompile(`"[^"]+"|OK`)
 
@@ -84,7 +85,7 @@ func SetDeviceName(name string) (err error) {
 		return errors.New(`name cannot contain " characters`)
 	}
 
-	cmds := [3]string{"+UBTLN=\""+name+"\"", "&W", "+CPWROFF"}
+	cmds := [3]string{"+UBTLN=\"" + name + "\"", "&W", "+CPWROFF"}
 
 	for _, cmd := range cmds {
 		_, err = sendATCmd(cmd)

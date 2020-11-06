@@ -16,11 +16,10 @@ import (
 	"github.com/f-secure-foundry/armoryctl/internal"
 )
 
-// I2C bus number
-var I2CBus = 0
-
-// I2C address
-var I2CAddress = 0x31
+var (
+	I2CBus     = 0
+	I2CAddress = 0x31
+)
 
 // Current mode values and meaning
 // (FUSB303/D, Table 6).

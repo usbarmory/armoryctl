@@ -18,13 +18,10 @@ import (
 	"github.com/f-secure-foundry/armoryctl/internal"
 )
 
-// I2C bus number
-var I2CBus = 0
-
-// I2C address
-var I2CAddress = 0x08
-
-const PF1510 = 0x04
+var (
+	I2CBus     = 0
+	I2CAddress = 0x08
+)
 
 // DEVICE_ID (p53, Table 52, PF1510 Datasheet).
 var DeviceID = map[byte]string{

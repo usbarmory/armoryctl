@@ -20,14 +20,15 @@ import (
 	"github.com/f-secure-foundry/armoryctl/internal"
 )
 
-// I2C bus number
-var I2CBus = 0
+var (
+	I2CBus     = 0
+	I2CAddress = 0x60
+)
 
-// I2C address
-var I2CAddress = 0x60
-
-const CmdAddress = 0x03
-const CRC16Poly uint16 = 0x8005
+const (
+	CmdAddress        = 0x03
+	CRC16Poly  uint16 = 0x8005
+)
 
 // Max command execution time in ms considering a Clock-Divider set to the
 // default/recommended value of 0x00.
@@ -165,7 +166,10 @@ func wake() (err error) {
 	return
 }
 
-func executeCmd(name string, param1 [1]byte, param2 [2]byte, data []byte) (result []byte, err error) {
+// ExecuteCmd issues an ATECC command conforming to:
+//   * p55, Table  9-1, ATECC508A Full Datasheet
+//   * p63, Table 10-1, ATECC608A Full Datasheet
+func ExecuteCmd(opcode byte, param1 [1]byte, param2 [2]byte, data []byte) (res []byte, err error) {
 	// ATECC cmd packet format:
 	//   count [1] | cmd fields [variable] | crc16 [2]
 	//
@@ -175,7 +179,7 @@ func executeCmd(name string, param1 [1]byte, param2 [2]byte, data []byte) (resul
 	// (p63, Table 10-1, ATECC608A Full Datasheet)
 	cmd := []byte{}
 	count := []byte{byte(CmdMinLen + len(data))}
-	op := []byte{Cmd[name]}
+	op := []byte{opcode}
 
 	cmd = append(cmd, count...)
 	cmd = append(cmd, op...)
@@ -213,7 +217,7 @@ func executeCmd(name string, param1 [1]byte, param2 [2]byte, data []byte) (resul
 
 	// The second read command gets the rest of the response from the
 	// output buffer.
-	res, err := armoryctl.I2CRead(I2CBus, I2CAddress, CmdAddress, uint(resCount[0]))
+	res, err = armoryctl.I2CRead(I2CBus, I2CAddress, CmdAddress, uint(resCount[0]))
 
 	if err != nil {
 		return
@@ -225,7 +229,7 @@ func executeCmd(name string, param1 [1]byte, param2 [2]byte, data []byte) (resul
 // Execute self test command
 func SelfTest() (res string, err error) {
 	// param1 0x3B: performs all available tests.
-	data, err := executeCmd("SelfTest", [1]byte{0x3B}, [2]byte{0x00, 0x00}, nil)
+	data, err := ExecuteCmd(Cmd["SelfTest"], [1]byte{0x3B}, [2]byte{0x00, 0x00}, nil)
 
 	if err != nil {
 		return
@@ -246,7 +250,7 @@ func SelfTest() (res string, err error) {
 func Info() (res string, err error) {
 	// param1 0x80: reads 32 bytes configuration region
 	// param2 0x0000: represents the start address
-	data, err := executeCmd("Read", [1]byte{0x80}, [2]byte{0x00, 0x00}, nil)
+	data, err := ExecuteCmd(Cmd["Read"], [1]byte{0x80}, [2]byte{0x00, 0x00}, nil)
 
 	if err != nil {
 		return
