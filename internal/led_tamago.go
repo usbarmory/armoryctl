@@ -6,13 +6,14 @@
 // Use of this source code is governed by the license
 // that can be found in the LICENSE file.
 
-package led
+// +build tamago,arm
+
+package armoryctl
 
 import (
-	"github.com/f-secure-foundry/armoryctl/internal"
+	"github.com/f-secure-foundry/tamago/board/f-secure/usbarmory/mark-two"
 )
 
-// Turn on/off LED by name.
-func Set(name string, on bool) (err error) {
-	return armoryctl.LED(name, on)
+func LED(name string, on bool) (err error) {
+	return usbarmory.LED(name, on)
 }

@@ -6,40 +6,36 @@
 // Use of this source code is governed by the license
 // that can be found in the LICENSE file.
 
+// +build linux
+
 package armoryctl
 
 import (
+	"strings"
+
 	"periph.io/x/periph/conn/gpio"
 	"periph.io/x/periph/host"
 	"periph.io/x/periph/host/sysfs"
 )
 
-func findLED(name string) (l *sysfs.LED, err error) {
+func LED(name string, on bool) (err error) {
 	_, err = host.Init()
 
 	if err != nil {
 		return
 	}
 
-	return sysfs.LEDByName(name)
-}
-
-func LEDOn(name string) (err error) {
-	l, err := findLED(name)
+	led, err := sysfs.LEDByName("LED_" + strings.ToUpper(name))
 
 	if err != nil {
 		return
 	}
 
-	return l.Out(gpio.High)
-}
-
-func LEDOff(name string) (err error) {
-	l, err := findLED(name)
-
-	if err != nil {
-		return
+	if on {
+		err = led.Out(gpio.High)
+	} else {
+		err = led.Out(gpio.Low)
 	}
 
-	return l.Out(gpio.Low)
+	return
 }
