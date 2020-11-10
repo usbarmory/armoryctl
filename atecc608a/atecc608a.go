@@ -145,23 +145,9 @@ func wake() (err error) {
 	//
 	// Writing 0x00 triggers the chip wake-up
 	// (p47, 7.1 I/O Conditions, ATECC608A Full Datasheet).
-	_ = armoryctl.I2CWrite(I2CBus, I2CAddress, 0x00, []byte{0x00})
+	_ = armoryctl.I2CWrite(I2CBus, I2CAddress, 0x00, []byte{0x00,0x00})
 
 	time.Sleep(CmdMaxExecutionTime * time.Millisecond)
-
-	// It is necessary to read 4 bytes of data to verify that the chip
-	// wake-up has been successfull.
-	res, err := armoryctl.I2CRead(I2CBus, I2CAddress, 0x00, 4)
-
-	if err != nil {
-		return
-	}
-
-	data, err := verifyResponse(res)
-
-	if err != nil && data[0] != 0x11 {
-		err = fmt.Errorf("wake-up failed, device status/error: %s", Status[data[0]])
-	}
 
 	return
 }
