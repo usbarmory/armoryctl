@@ -33,7 +33,7 @@ const (
 // Max command execution time in ms considering a Clock-Divider set to the
 // default/recommended value of 0x00.
 // (p66, Table 10-5, ATECC608A Full Datasheet)
-const CmdMaxExecutionTime = 200
+const CmdMaxExecutionTime = 200 + 50
 
 // Minimum required cmd fields:
 //   count (1) + op (1) + param1 (1) + param2 (2) + crc16 (2).
@@ -139,23 +139,57 @@ func verifyResponse(res []byte) (data []byte, err error) {
 	return
 }
 
-func wake() (err error) {
+// Wake issues a device wake-up which is always needed before starting a
+// new command session.
+func Wake() (err error) {
 	// Any error at the very first I2CWrite() is silently ignored as
 	// the device always returns a "Write Error" here.
 	//
 	// Writing 0x00 triggers the chip wake-up
 	// (p47, 7.1 I/O Conditions, ATECC608A Full Datasheet).
-	_ = armoryctl.I2CWrite(I2CBus, I2CAddress, 0x00, []byte{0x00,0x00})
+	_ = armoryctl.I2CWrite(I2CBus, I2CAddress, 0x00, []byte{0x00})
 
 	time.Sleep(CmdMaxExecutionTime * time.Millisecond)
 
+	// It is necessary to read 4 bytes of data to verify that the chip
+	// wake-up has been successful.
+	res, err := armoryctl.I2CRead(I2CBus, I2CAddress, 0x00, 4)
+
+	if err != nil {
+		return
+	}
+
+	data, err := verifyResponse(res)
+
+	if err != nil && data[0] != 0x11 {
+		err = fmt.Errorf("wake-up failed")
+	}
+
 	return
+}
+
+// Sleep puts the device in sleep mode which is necessary at the end of each
+// command sequence.
+func Sleep() {
+	armoryctl.I2CWrite(I2CBus, I2CAddress, 0x01, nil)
 }
 
 // ExecuteCmd issues an ATECC command conforming to:
 //   * p55, Table  9-1, ATECC508A Full Datasheet
 //   * p63, Table 10-1, ATECC608A Full Datasheet
-func ExecuteCmd(opcode byte, param1 [1]byte, param2 [2]byte, data []byte) (res []byte, err error) {
+//
+// The wake flag results in the executed command to be issued individually within a
+// Wake() and Sleep() cycle, when the flag is false the caller must take care of
+// waking/sleeping according to its desired command sequence.
+func ExecuteCmd(opcode byte, param1 [1]byte, param2 [2]byte, data []byte, wake bool) (res []byte, err error) {
+	if wake {
+		if err = Wake(); err != nil {
+			return
+		}
+
+		defer Sleep()
+	}
+
 	// ATECC cmd packet format:
 	//   count [1] | cmd fields [variable] | crc16 [2]
 	//
@@ -173,14 +207,6 @@ func ExecuteCmd(opcode byte, param1 [1]byte, param2 [2]byte, data []byte) (res [
 	cmd = append(cmd, param2[:]...)
 	cmd = append(cmd, data...)
 	cmd = append(cmd, crc16(cmd)...)
-
-	// A Device Wake-up is always needed before starting a new command session,
-	// otherwise any I2C read/write will fail.
-	err = wake()
-
-	if err != nil {
-		return
-	}
 
 	err = armoryctl.I2CWrite(I2CBus, I2CAddress, CmdAddress, cmd)
 
@@ -214,8 +240,8 @@ func ExecuteCmd(opcode byte, param1 [1]byte, param2 [2]byte, data []byte) (res [
 
 // Execute self test command
 func SelfTest() (res string, err error) {
-	// param1 0x3B: performs all available tests.
-	data, err := ExecuteCmd(Cmd["SelfTest"], [1]byte{0x3B}, [2]byte{0x00, 0x00}, nil)
+	// param1 0x3b: performs all available tests.
+	data, err := ExecuteCmd(Cmd["SelfTest"], [1]byte{0x3b}, [2]byte{0x00, 0x00}, nil, true)
 
 	if err != nil {
 		return
@@ -236,7 +262,7 @@ func SelfTest() (res string, err error) {
 func Info() (res string, err error) {
 	// param1 0x80: reads 32 bytes configuration region
 	// param2 0x0000: represents the start address
-	data, err := ExecuteCmd(Cmd["Read"], [1]byte{0x80}, [2]byte{0x00, 0x00}, nil)
+	data, err := ExecuteCmd(Cmd["Read"], [1]byte{0x80}, [2]byte{0x00, 0x00}, nil, true)
 
 	if err != nil {
 		return
