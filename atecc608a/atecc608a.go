@@ -171,7 +171,7 @@ func Wake() (err error) {
 // Sleep puts the device in sleep mode which is necessary at the end of each
 // command sequence.
 func Sleep() {
-	armoryctl.I2CWrite(I2CBus, I2CAddress, 0x01, nil)
+	_ = armoryctl.I2CWrite(I2CBus, I2CAddress, 0x01, nil)
 }
 
 // ExecuteCmd issues an ATECC command conforming to:
