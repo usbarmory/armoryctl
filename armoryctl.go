@@ -22,7 +22,7 @@ import (
 	"regexp"
 
 	"github.com/f-secure-foundry/armoryctl/anna_b112"
-	"github.com/f-secure-foundry/armoryctl/atecc608a"
+	"github.com/f-secure-foundry/armoryctl/atecc608"
 	"github.com/f-secure-foundry/armoryctl/fusb303"
 	"github.com/f-secure-foundry/armoryctl/internal"
 	"github.com/f-secure-foundry/armoryctl/led"
@@ -74,7 +74,7 @@ Bluetooth module (ANNA-B112)
   ble update <firmware path>	# module firmware update
   ble name <device name>	# set device name
 
-Secure Element #1 (ATECC608A)
+Secure Element (ATECC608A/ATECC608B)
   atecc info			# read device information
   atecc self_test		# execute self test procedure
 
@@ -119,8 +119,8 @@ func init() {
 	flag.StringVar(&anna_b112.UARTPath, "u", anna_b112.UARTPath, "ANNA-B112 UART path")
 	flag.IntVar(&anna_b112.UARTSpeed, "s", anna_b112.UARTSpeed, "ANNA-B112 UART speed")
 
-	flag.IntVar(&atecc608a.I2CBus, "i", atecc608a.I2CBus, "ATECC608A I2C bus number")
-	flag.IntVar(&atecc608a.I2CAddress, "l", atecc608a.I2CAddress, "ATECC608A I2C address")
+	flag.IntVar(&atecc608.I2CBus, "i", atecc608.I2CBus, "ATECC608 I2C bus number")
+	flag.IntVar(&atecc608.I2CAddress, "l", atecc608.I2CAddress, "ATECC608 I2C address")
 
 	flag.IntVar(&fusb303.I2CBus, "m", fusb303.I2CBus, "FUSB303 I2C bus number")
 	flag.IntVar(&fusb303.I2CAddress, "n", fusb303.I2CAddress, "FUSB303 I2C address")
@@ -264,9 +264,9 @@ func main() {
 
 		err = anna_b112.SetDeviceName(flag.Arg(2))
 	case "atecc info":
-		res, err = atecc608a.Info()
+		res, err = atecc608.Info()
 	case "atecc self_test":
-		res, err = atecc608a.SelfTest()
+		res, err = atecc608.SelfTest()
 	case "pmic info":
 		res, err = pf1510.Info()
 	default:

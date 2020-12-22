@@ -33,7 +33,7 @@ II components:
 * I²C slaves
   - Type-C plug port controller (TUSB320)
   - Type-C receptacle port controller (FUSB303)
-  - Secure Element #1 (ATECC608A)
+  - Secure Element (ATECC608A/ATECC608B)
   - Power Management Integrated Circuit (PF1510)
 
 * UART
@@ -63,9 +63,9 @@ Usage: armoryctl [options] [command]
   -d	debug
   -f	skip hardware check and force execution
   -i int
-    	ATECC608A I2C bus number
+    	ATECC608 I2C bus number
   -l int
-    	ATECC608A I2C address (default 96)
+    	ATECC608 I2C address (default 96)
   -m int
     	FUSB303 I2C bus number
   -n int
@@ -109,7 +109,7 @@ Bluetooth module (ANNA-B112)
   ble update <firmware path>	# module firmware update
   ble name <device name>	# set device name
 
-Secure Element #1 (ATECC608A)
+Secure Element (ATECC608A/ATECC608B)
   atecc info			# read device information
   atecc self_test		# execute self test procedure
 

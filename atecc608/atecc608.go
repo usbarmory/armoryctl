@@ -10,7 +10,7 @@
 //   http://ww1.microchip.com/downloads/en/DeviceDoc/ATECC608A-CryptoAuthentication-Device-Summary-Data-Sheet-DS40001977B.pdf
 //   https://github.com/f-secure-foundry/usbarmory/wiki/I%C2%B2C-(Mk-II)
 
-package atecc608a
+package atecc608
 
 import (
 	"bytes"
