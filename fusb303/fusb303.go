@@ -10,6 +10,9 @@
 //   https://www.onsemi.com/pub/Collateral/FUSB303-D.PDF
 //   https://github.com/f-secure-foundry/usbarmory/wiki/I%C2%B2C-(Mk-II)
 
+
+// Package fusb303 supports communication with the On Semiconductor FUSB303 USB
+// Type-C port controller.
 package fusb303
 
 import (

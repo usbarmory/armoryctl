@@ -10,6 +10,8 @@
 //   https://www.u-blox.com/sites/default/files/ANNA-B112_DataSheet_%28UBX-18011707%29.pdf
 //   https://github.com/f-secure-foundry/usbarmory/wiki/Bluetooth
 
+// Package anna_b112 supports serial communication and reprogramming for the
+// u-blox ANNA-B112 Bluetooth (BLE) module.
 package anna_b112
 
 import (

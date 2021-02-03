@@ -10,6 +10,8 @@
 //   http://www.ti.com/lit/ds/symlink/tusb320.pdf
 //   https://github.com/f-secure-foundry/usbarmory/wiki/I%C2%B2C-(Mk-II)
 
+// Package tusb320 supports communication with the Texas Instruments TUSB320
+// USB Type-C port controller.
 package tusb320
 
 import (
