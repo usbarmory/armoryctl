@@ -33,27 +33,51 @@ const (
 )
 
 // Max command execution time in ms considering a Clock-Divider set to the
-// default/recommended value of 0x00.
-// (p66, Table 10-5, ATECC608A Full Datasheet)
-const CmdMaxExecutionTime = 200 + 50
+// default/recommended value of 0x00,
+// (p66, Table 10-5, ATECC608A Full Datasheet).
+const CmdMaxExecutionTime = (200 + 50) * time.Millisecond
+
+// CmdExecutionTime sets the wait time between command execution and result
+// retrieval.
+var CmdExecutionTime = CmdMaxExecutionTime
 
 // Minimum required cmd fields:
 //   count (1) + op (1) + param1 (1) + param2 (2) + crc16 (2).
-const CmdMinLen = 7
+const cmdMinLen = 7
 
 // Minimum required response fields:
 //   count (1) + data (1) + crc16 (2).
-const ResponseMinLen = 4
+const responseMinLen = 4
 
-// Supported commands.
-// (p72, 11. Detailed Command Descriptions, ATECC608A Full Datasheet)
+// Cmd represents the list of supported command codes,
+// (p65, 10.4.1. Command Summary, ATECC608A Full Datasheet).
 var Cmd = map[string]byte{
-	"Read":     0x02,
-	"SelfTest": 0x77,
+	"AES":         0x51,
+	"CheckMac":    0x28,
+	"Counter":     0x24,
+	"DeriveKey":   0x1C,
+	"ECDH":        0x43,
+	"GenDig":      0x15,
+	"GenKey":      0x40,
+	"Info":        0x30,
+	"KDF":         0x56,
+	"Lock":        0x17,
+	"MAC":         0x08,
+	"Nonce":       0x16,
+	"PrivWrite":   0x46,
+	"Random":      0x1B,
+	"Read":        0x02,
+	"SecureBoot":  0x80,
+	"SelfTest":    0x77,
+	"Sign":        0x41,
+	"SHA":         0x47,
+	"UpdateExtra": 0x20,
+	"Verify":      0x45,
+	"Write":       0x12,
 }
 
-// Device status/error codes.
-// (p64-65, Tab 10-3, ATECC608A Full Datasheet)
+// Status represents the device status/error codes,
+// (p64-65, Tab 10-3, ATECC608A Full Datasheet).
 var Status = map[byte]string{
 	0x00: "successful command execution",
 	0x01: "checkmac or verify miscompare",
@@ -67,9 +91,9 @@ var Status = map[byte]string{
 	0xff: "CRC or other communications error",
 }
 
-// Supported tests and result bit mask.
-// (p100, Table 11-43, ATECC608A Full Datasheet)
-var Test = map[string]byte{
+// Supported tests and result bit mask,
+// (p100, Table 11-43, ATECC608A Full Datasheet).
+var testMask = map[string]byte{
 	"RNG":   0x20,
 	"AES":   0x10,
 	"ECDH":  0x08,
@@ -107,8 +131,8 @@ func verifyResponse(res []byte) (data []byte, err error) {
 	//   count [1] | status/error/response data[variable] | crc16 [2]
 	//
 	// (p63, Table 10-1, ATECC608A Full Datasheet)
-	if len(res) < ResponseMinLen {
-		err = fmt.Errorf("invalid response, got less than %d bytes", ResponseMinLen)
+	if len(res) < responseMinLen {
+		err = fmt.Errorf("invalid response, got less than %d bytes", responseMinLen)
 		return
 	}
 
@@ -124,9 +148,9 @@ func verifyResponse(res []byte) (data []byte, err error) {
 		return
 	}
 
-	if count != 4 {
-		// A response with 4 bytes must contain a valid status/error code,
-		// otherwise data is being transferred.
+	// A response with 4 bytes must contain a valid status/error code,
+	// otherwise data is being transferred.
+	if count > responseMinLen {
 		return
 	}
 
@@ -151,8 +175,6 @@ func Wake() (err error) {
 	// (p47, 7.1 I/O Conditions, ATECC608A Full Datasheet).
 	_ = armoryctl.I2CWrite(I2CBus, I2CAddress, 0x00, []byte{0x00})
 
-	time.Sleep(CmdMaxExecutionTime * time.Millisecond)
-
 	// It is necessary to read 4 bytes of data to verify that the chip
 	// wake-up has been successful.
 	res, err := armoryctl.I2CRead(I2CBus, I2CAddress, 0x00, 4)
@@ -170,8 +192,14 @@ func Wake() (err error) {
 	return
 }
 
-// Sleep puts the device in sleep mode which is necessary at the end of each
-// command sequence.
+// Idle puts the device in idle mode,
+// (p50, Table 7-2, ATECC608A Full Datasheet).
+func Idle() {
+	_ = armoryctl.I2CWrite(I2CBus, I2CAddress, 0x02, nil)
+}
+
+// Sleep puts the device in sleep mode,
+// (p50, Table 7-2, ATECC608A Full Datasheet).
 func Sleep() {
 	_ = armoryctl.I2CWrite(I2CBus, I2CAddress, 0x01, nil)
 }
@@ -180,16 +208,17 @@ func Sleep() {
 //   * p55, Table  9-1, ATECC508A Full Datasheet
 //   * p63, Table 10-1, ATECC608A Full Datasheet
 //
-// The wake flag results in the executed command to be issued individually within a
-// Wake() and Sleep() cycle, when the flag is false the caller must take care of
-// waking/sleeping according to its desired command sequence.
+// The wake flag results in the executed command to be issued individually
+// within a Wake() and Idle() cycle, when the flag is false the caller must
+// take care of waking/idling/sleeping according to its desired command
+// sequence.
 func ExecuteCmd(opcode byte, param1 [1]byte, param2 [2]byte, data []byte, wake bool) (res []byte, err error) {
 	if wake {
 		if err = Wake(); err != nil {
 			return
 		}
 
-		defer Sleep()
+		defer Idle()
 	}
 
 	// ATECC cmd packet format:
@@ -199,24 +228,22 @@ func ExecuteCmd(opcode byte, param1 [1]byte, param2 [2]byte, data []byte, wake b
 	//   opcode [1] | param1 [1] | param2 [2] | data [variable]
 	//
 	// (p63, Table 10-1, ATECC608A Full Datasheet)
-	cmd := []byte{}
-	count := []byte{byte(CmdMinLen + len(data))}
-	op := []byte{opcode}
+	var pkt []byte
 
-	cmd = append(cmd, count...)
-	cmd = append(cmd, op...)
-	cmd = append(cmd, param1[:]...)
-	cmd = append(cmd, param2[:]...)
-	cmd = append(cmd, data...)
-	cmd = append(cmd, crc16(cmd)...)
+	count := []byte{byte(cmdMinLen + len(data))}
 
-	err = armoryctl.I2CWrite(I2CBus, I2CAddress, CmdAddress, cmd)
+	pkt = append(pkt, count...)
+	pkt = append(pkt, opcode)
+	pkt = append(pkt, param1[:]...)
+	pkt = append(pkt, param2[:]...)
+	pkt = append(pkt, data...)
+	pkt = append(pkt, crc16(pkt)...)
 
-	if err != nil {
+	if err = armoryctl.I2CWrite(I2CBus, I2CAddress, CmdAddress, pkt); err != nil {
 		return
 	}
 
-	time.Sleep(CmdMaxExecutionTime * time.Millisecond)
+	time.Sleep(CmdExecutionTime)
 
 	// The output FIFO is shared among status, error, and command results.
 	// The first read command is needed to read how many bytes are present
@@ -240,7 +267,7 @@ func ExecuteCmd(opcode byte, param1 [1]byte, param2 [2]byte, data []byte, wake b
 	return verifyResponse(res)
 }
 
-// Execute self test command
+// SelfTest executes the self test command and returns its results.
 func SelfTest() (res string, err error) {
 	// param1 0x3b: performs all available tests.
 	data, err := ExecuteCmd(Cmd["SelfTest"], [1]byte{0x3b}, [2]byte{0x00, 0x00}, nil, true)
@@ -249,7 +276,7 @@ func SelfTest() (res string, err error) {
 		return
 	}
 
-	for k, v := range Test {
+	for k, v := range testMask {
 		if data[0]&v != 0x00 {
 			res += k + ":FAIL "
 		} else {
@@ -260,7 +287,8 @@ func SelfTest() (res string, err error) {
 	return
 }
 
-// Read device serial number and software revision
+// Info executes the info command and returns the device serial number and
+// software revision.
 func Info() (res string, err error) {
 	// param1 0x80: reads 32 bytes configuration region
 	// param2 0x0000: represents the start address
