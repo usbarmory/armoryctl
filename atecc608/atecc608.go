@@ -177,7 +177,7 @@ func Wake() (err error) {
 
 	// Wait tWHI
 	// (p56, 9.3 AC Parameters: All I/O Interfaces, ATECC608A Full Datasheet).
-	time.Sleep(1500 * time.Microseconds)
+	time.Sleep(1500 * time.Microsecond)
 
 	// It is necessary to read 4 bytes of data to verify that the chip
 	// wake-up has been successful.
