@@ -175,6 +175,10 @@ func Wake() (err error) {
 	// (p47, 7.1 I/O Conditions, ATECC608A Full Datasheet).
 	_ = armoryctl.I2CWrite(I2CBus, I2CAddress, 0x00, []byte{0x00})
 
+	// Wait tWHI
+	// (p56, 9.3 AC Parameters: All I/O Interfaces, ATECC608A Full Datasheet).
+	time.Sleep(1500 * time.Microseconds)
+
 	// It is necessary to read 4 bytes of data to verify that the chip
 	// wake-up has been successful.
 	res, err := armoryctl.I2CRead(I2CBus, I2CAddress, 0x00, 4)
