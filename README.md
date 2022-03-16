@@ -1,7 +1,7 @@
 USB armory Mk II - hardware control tool
 ========================================
 
-armoryctl | https://github.com/f-secure-foundry/armoryctl  
+armoryctl | https://github.com/usbarmory/armoryctl  
 Copyright (c) F-Secure Corporation
 
 Authors
@@ -17,7 +17,7 @@ Introduction
 ============
 
 The `armoryctl` tool provides user space support for communicating with the
-[USB armory Mk II](https://github.com/f-secure-foundry/usbarmory/wiki) internal
+[USB armory Mk II](https://github.com/usbarmory/usbarmory/wiki) internal
 peripherals.
 
 The function leveraged by the tool are all exported to allow use of the package
@@ -51,7 +51,7 @@ Requirements
 ============
 
 The `ble rc_lfck flash` and `ble update` commands require the `openocd` tool
-compiled with the `-enable-imx_gpio` flag ([compilation instructions](https://github.com/f-secure-foundry/usbarmory/wiki/Bluetooth#using-openocd-for-jtag-access)).
+compiled with the `-enable-imx_gpio` flag ([compilation instructions](https://github.com/usbarmory/usbarmory/wiki/Bluetooth#using-openocd-for-jtag-access)).
 
 Operation
 =========
@@ -124,13 +124,13 @@ You can automatically download, compile and install the package, under your
 GOPATH, as follows:
 
 ```
-go install github.com/f-secure-foundry/armoryctl@latest
+go install github.com/usbarmory/armoryctl@latest
 ```
 
 Alternatively you can manually compile it from source:
 
 ```
-git clone https://github.com/f-secure-foundry/armoryctl
+git clone https://github.com/usbarmory/armoryctl
 cd armoryctl && make
 ```
 
@@ -145,8 +145,8 @@ The default compilation target automatically runs all available unit tests.
 License
 =======
 
-armoryctl | https://github.com/f-secure-foundry/armoryctl  
+armoryctl | https://github.com/usbarmory/armoryctl  
 Copyright (c) F-Secure Corporation
 
 These source files are distributed under the BSD-style license found in the
-[LICENSE](https://github.com/f-secure-foundry/armoryctl/blob/master/LICENSE) file.
+[LICENSE](https://github.com/usbarmory/armoryctl/blob/master/LICENSE) file.

@@ -1,4 +1,4 @@
-// armoryctl | https://github.com/f-secure-foundry/armoryctl
+// armoryctl | https://github.com/usbarmory/armoryctl
 //
 // USB armory Mk II - hardware control tool
 // Copyright (c) F-Secure Corporation
@@ -10,7 +10,7 @@
 package led
 
 import (
-	"github.com/f-secure-foundry/armoryctl/internal"
+	"github.com/usbarmory/armoryctl/internal"
 )
 
 // Turn on/off LED by name.

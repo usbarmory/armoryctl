@@ -1,4 +1,4 @@
-// armoryctl | https://github.com/f-secure-foundry/armoryctl
+// armoryctl | https://github.com/usbarmory/armoryctl
 //
 // USB armory Mk II - hardware control tool
 // Copyright (c) F-Secure Corporation
@@ -8,7 +8,7 @@
 //
 // Links:
 //   https://www.onsemi.com/pub/Collateral/FUSB303-D.PDF
-//   https://github.com/f-secure-foundry/usbarmory/wiki/I%C2%B2C-(Mk-II)
+//   https://github.com/usbarmory/usbarmory/wiki/I%C2%B2C-(Mk-II)
 
 
 // Package fusb303 supports communication with the On Semiconductor FUSB303 USB
@@ -16,7 +16,7 @@
 package fusb303
 
 import (
-	"github.com/f-secure-foundry/armoryctl/internal"
+	"github.com/usbarmory/armoryctl/internal"
 )
 
 var (

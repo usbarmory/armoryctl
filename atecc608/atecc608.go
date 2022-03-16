@@ -1,4 +1,4 @@
-// armoryctl | https://github.com/f-secure-foundry/armoryctl
+// armoryctl | https://github.com/usbarmory/armoryctl
 //
 // USB armory Mk II - hardware control tool
 // Copyright (c) F-Secure Corporation
@@ -8,7 +8,7 @@
 //
 // Links:
 //   http://ww1.microchip.com/downloads/en/DeviceDoc/ATECC608A-CryptoAuthentication-Device-Summary-Data-Sheet-DS40001977B.pdf
-//   https://github.com/f-secure-foundry/usbarmory/wiki/I%C2%B2C-(Mk-II)
+//   https://github.com/usbarmory/usbarmory/wiki/I%C2%B2C-(Mk-II)
 
 // Package atecc608 supports communication with Microchip ATECC608A and
 // ATECC608B secure elements.
@@ -19,7 +19,7 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/f-secure-foundry/armoryctl/internal"
+	"github.com/usbarmory/armoryctl/internal"
 )
 
 var (

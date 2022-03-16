@@ -1,4 +1,4 @@
-// armoryctl | https://github.com/f-secure-foundry/armoryctl
+// armoryctl | https://github.com/usbarmory/armoryctl
 //
 // USB armory Mk II - hardware control tool
 // Copyright (c) F-Secure Corporation
@@ -8,7 +8,7 @@
 //
 // Links:
 //   https://www.u-blox.com/sites/default/files/ANNA-B112_DataSheet_%28UBX-18011707%29.pdf
-//   https://github.com/f-secure-foundry/usbarmory/wiki/Bluetooth
+//   https://github.com/usbarmory/usbarmory/wiki/Bluetooth
 
 package anna_b112
 
@@ -25,7 +25,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/f-secure-foundry/armoryctl/internal"
+	"github.com/usbarmory/armoryctl/internal"
 )
 
 var (

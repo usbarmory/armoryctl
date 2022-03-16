@@ -1,4 +1,4 @@
-// armoryctl | https://github.com/f-secure-foundry/armoryctl
+// armoryctl | https://github.com/usbarmory/armoryctl
 //
 // USB armory Mk II - hardware control tool
 // Copyright (c) F-Secure Corporation
@@ -21,13 +21,13 @@ import (
 	"path/filepath"
 	"regexp"
 
-	"github.com/f-secure-foundry/armoryctl/anna_b112"
-	"github.com/f-secure-foundry/armoryctl/atecc608"
-	"github.com/f-secure-foundry/armoryctl/fusb303"
-	"github.com/f-secure-foundry/armoryctl/internal"
-	"github.com/f-secure-foundry/armoryctl/led"
-	"github.com/f-secure-foundry/armoryctl/pf1510"
-	"github.com/f-secure-foundry/armoryctl/tusb320"
+	"github.com/usbarmory/armoryctl/anna_b112"
+	"github.com/usbarmory/armoryctl/atecc608"
+	"github.com/usbarmory/armoryctl/fusb303"
+	"github.com/usbarmory/armoryctl/internal"
+	"github.com/usbarmory/armoryctl/led"
+	"github.com/usbarmory/armoryctl/pf1510"
+	"github.com/usbarmory/armoryctl/tusb320"
 )
 
 type Config struct {
