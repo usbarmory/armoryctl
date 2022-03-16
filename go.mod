@@ -1,13 +1,16 @@
 module github.com/usbarmory/armoryctl
 
-go 1.12
+go 1.18
 
 require (
-	github.com/albenik/go-serial/v2 v2.3.0
-	github.com/usbarmory/tamago v0.0.0-20210809073203-902df26b3914
-	github.com/niemeyer/pretty v0.0.0-20200227124842-a10e7caefd8e // indirect
+	github.com/albenik/go-serial/v2 v2.5.0
+	github.com/usbarmory/tamago v0.0.0-20220316100121-e9baee61883d
+	periph.io/x/periph v3.6.8+incompatible
+)
+
+require (
+	github.com/creack/goselect v0.1.2 // indirect
 	go.uber.org/atomic v1.9.0 // indirect
 	go.uber.org/multierr v1.7.0 // indirect
-	golang.org/x/sys v0.0.0-20210816074244-15123e1e1f71 // indirect
-	periph.io/x/periph v3.6.8+incompatible
+	golang.org/x/sys v0.0.0-20211216021012-1d35b9e2eb4e // indirect
 )
