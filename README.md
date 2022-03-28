@@ -2,16 +2,16 @@ USB armory Mk II - hardware control tool
 ========================================
 
 armoryctl | https://github.com/usbarmory/armoryctl  
-Copyright (c) F-Secure Corporation
+Copyright (c) WithSecure Corporation
 
 Authors
 =======
 
 Andrea Barisani  
-andrea.barisani@f-secure.com | andrea@inversepath.com  
+andrea.barisani@withsecure.com | andrea@inversepath.com  
 
 Daniele Bianco  
-daniele.bianco@f-secure.com | daniele@inversepath.com  
+daniele.bianco@withsecure.com | daniele@inversepath.com  
 
 Introduction
 ============
@@ -146,7 +146,7 @@ License
 =======
 
 armoryctl | https://github.com/usbarmory/armoryctl  
-Copyright (c) F-Secure Corporation
+Copyright (c) WithSecure Corporation
 
 These source files are distributed under the BSD-style license found in the
 [LICENSE](https://github.com/usbarmory/armoryctl/blob/master/LICENSE) file.
