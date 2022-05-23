@@ -4,7 +4,7 @@ go 1.18
 
 require (
 	github.com/albenik/go-serial/v2 v2.5.0
-	github.com/usbarmory/tamago v0.0.0-20220316100121-e9baee61883d
+	github.com/usbarmory/tamago v0.0.0-20220523113853-2cf301ace971
 	periph.io/x/periph v3.6.8+incompatible
 )
 

@@ -11,7 +11,7 @@
 package armoryctl
 
 import (
-	"github.com/usbarmory/tamago/board/f-secure/usbarmory/mark-two"
+	usbarmory "github.com/usbarmory/tamago/board/usbarmory/mk2"
 )
 
 func LED(name string, on bool) (err error) {
