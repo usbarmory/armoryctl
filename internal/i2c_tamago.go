@@ -13,13 +13,13 @@ package armoryctl
 import (
 	"fmt"
 
-	"github.com/usbarmory/tamago/soc/imx6"
+	"github.com/usbarmory/tamago/soc/imx6ul"
 )
 
 const I2CBus = 0
 
 func init() {
-	imx6.I2C1.Init()
+	imx6ul.I2C1.Init()
 }
 
 func I2CRead(bus int, addr int, reg uint8, size uint) (val []byte, err error) {
@@ -27,7 +27,7 @@ func I2CRead(bus int, addr int, reg uint8, size uint) (val []byte, err error) {
 		return nil, fmt.Errorf("I2C bus must be set to %d", I2CBus)
 	}
 
-	return imx6.I2C1.Read(uint8(addr), uint32(reg), 1, int(size))
+	return imx6ul.I2C1.Read(uint8(addr), uint32(reg), 1, int(size))
 }
 
 func I2CWrite(bus int, addr int, reg uint8, val []byte) (err error) {
@@ -35,5 +35,5 @@ func I2CWrite(bus int, addr int, reg uint8, val []byte) (err error) {
 		return fmt.Errorf("I2C bus must be set to %d", I2CBus)
 	}
 
-	return imx6.I2C1.Write(val, uint8(addr), uint32(reg), 1)
+	return imx6ul.I2C1.Write(val, uint8(addr), uint32(reg), 1)
 }
