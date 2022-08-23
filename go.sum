@@ -13,6 +13,8 @@ github.com/stretchr/testify v1.3.0/go.mod h1:M5WIy9Dh21IEIfnGCwXGc5bZfKNJtfHm1UV
 github.com/stretchr/testify v1.7.0/go.mod h1:6Fq8oRcR53rry900zMqJjRRixrwX3KX962/h/Wwjteg=
 github.com/usbarmory/tamago v0.0.0-20220714104148-d5b7c14a0fbb h1:hMUTOoMrjgbP/Yjvy3SAyHFZ+W3v1cQTrvO09R1cqa8=
 github.com/usbarmory/tamago v0.0.0-20220714104148-d5b7c14a0fbb/go.mod h1:Lok79mjbJnhoBGqhX5cCUsZtSemsQF5FNZW+2R1dRr8=
+github.com/usbarmory/tamago v0.0.0-20220823080407-04f05cf2a5a3 h1:OgWngXmohy/sxTnHm7uStq0YlMkH0J+JY2HnBCv6fn0=
+github.com/usbarmory/tamago v0.0.0-20220823080407-04f05cf2a5a3/go.mod h1:Lok79mjbJnhoBGqhX5cCUsZtSemsQF5FNZW+2R1dRr8=
 go.uber.org/atomic v1.7.0/go.mod h1:fEN4uk6kAWBTFdckzkM89CLk9XfWZrxpCo0nPH17wJc=
 go.uber.org/atomic v1.9.0/go.mod h1:fEN4uk6kAWBTFdckzkM89CLk9XfWZrxpCo0nPH17wJc=
 go.uber.org/multierr v1.7.0/go.mod h1:7EAYxJLBy9rStEaz58O2t4Uvip6FSURkq8/ppBp95ak=
