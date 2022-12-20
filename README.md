@@ -20,8 +20,8 @@ The `armoryctl` tool provides user space support for communicating with the
 [USB armory Mk II](https://github.com/usbarmory/usbarmory/wiki) internal
 peripherals.
 
-The function leveraged by the tool are all exported to allow use of the package
-as a library.
+The functions leveraged by the tool are all exported to allow use of the
+package as a library.
 
 The package simplifies communication with the following on-board USB armory Mk
 II components:
