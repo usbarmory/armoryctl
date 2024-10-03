@@ -13,9 +13,9 @@ package armoryctl
 import (
 	"strings"
 
-	"periph.io/x/periph/conn/gpio"
-	"periph.io/x/periph/host"
-	"periph.io/x/periph/host/sysfs"
+	"periph.io/x/conn/v3/gpio"
+	"periph.io/x/host/v3"
+	"periph.io/x/host/v3/sysfs"
 )
 
 func LED(name string, on bool) (err error) {

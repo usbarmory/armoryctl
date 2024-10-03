@@ -14,7 +14,6 @@ import (
 	"errors"
 	"flag"
 	"fmt"
-	"io/ioutil"
 	"log"
 	"os"
 	"os/user"
@@ -105,10 +104,10 @@ func init() {
 		}
 
 		log.Printf("USB armory Mk II hardware control tool\n%s\n", tags)
-		log.Println(warning)
+		log.Print(warning)
 		log.Printf("Usage: armoryctl [options] [command]\n")
 		flag.PrintDefaults()
-		log.Println(commandUsage)
+		log.Print(commandUsage)
 	}
 
 	flag.BoolVar(&conf.debug, "d", false, "debug")
@@ -133,7 +132,7 @@ func init() {
 }
 
 func checkModel() (match bool) {
-	model, _ := ioutil.ReadFile("/proc/device-tree/model")
+	model, _ := os.ReadFile("/proc/device-tree/model")
 	match, _ = regexp.Match("F-Secure USB armory Mk II", model)
 
 	return
@@ -199,7 +198,7 @@ func main() {
 		id, err = tusb320.GetDeviceID()
 
 		if err == nil {
-			res = fmt.Sprintf("%s", id)
+			res = string(id)
 		}
 	case "fusb id":
 		var id []byte

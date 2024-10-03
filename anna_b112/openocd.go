@@ -16,7 +16,6 @@ import (
 	"encoding/binary"
 	"encoding/json"
 	"fmt"
-	"io/ioutil"
 	"os"
 	"os/exec"
 	"path/filepath"
@@ -124,7 +123,7 @@ func getBootloader(path string, archive string) (bootloader []byte, err error) {
 		return
 	}
 
-	j, err := ioutil.ReadFile(filepath.Join(path, updateManifest))
+	j, err := os.ReadFile(filepath.Join(path, updateManifest))
 
 	if err != nil {
 		return
@@ -142,7 +141,7 @@ func getBootloader(path string, archive string) (bootloader []byte, err error) {
 		return
 	}
 
-	return ioutil.ReadFile(filepath.Join(path, m.Manifest.Bootloader.BinFile))
+	return os.ReadFile(filepath.Join(path, m.Manifest.Bootloader.BinFile))
 }
 
 func getConfig(path string) (config []byte, err error) {
@@ -157,7 +156,7 @@ func getConfig(path string) (config []byte, err error) {
 		return
 	}
 
-	return ioutil.ReadFile(configFile[0])
+	return os.ReadFile(configFile[0])
 }
 
 func prepareImage(path string, output string) (err error) {
@@ -215,7 +214,7 @@ func prepareImage(path string, output string) (err error) {
 	copy(flash[bootloaderOffset:], bootloader)
 
 	tag = config[connectivitySoftwareTag]
-	connectivitySoftware, err := ioutil.ReadFile(filepath.Join(path, tag.File))
+	connectivitySoftware, err := os.ReadFile(filepath.Join(path, tag.File))
 
 	if err != nil {
 		return
@@ -230,7 +229,7 @@ func prepareImage(path string, output string) (err error) {
 	copy(flash[addr:], connectivitySoftware)
 
 	tag = config[softDeviceTag]
-	softDevice, err := ioutil.ReadFile(filepath.Join(path, tag.File))
+	softDevice, err := os.ReadFile(filepath.Join(path, tag.File))
 
 	if err != nil {
 		return
@@ -266,14 +265,14 @@ func prepareImage(path string, output string) (err error) {
 
 	copy(flash[softDeviceCRCOffset+4:], s)
 
-	return ioutil.WriteFile(output, flash[:], 0644)
+	return os.WriteFile(output, flash[:], 0644)
 }
 
 func initCache() (cachePath string, err error) {
 	cachePath = CachePath
 
 	if cachePath == "" {
-		cachePath, err = ioutil.TempDir("", "openocd-")
+		cachePath, err = os.MkdirTemp("", "openocd-")
 	} else {
 		err = os.MkdirAll(cachePath, os.ModePerm)
 	}
@@ -288,7 +287,7 @@ func initOpenOCD() (openocd string, interfacePath string, transportPath string, 
 		return
 	}
 
-	tmpDir, err = ioutil.TempDir("", "openocd-")
+	tmpDir, err = os.MkdirTemp("", "openocd-")
 
 	if err != nil {
 		return
@@ -297,13 +296,13 @@ func initOpenOCD() (openocd string, interfacePath string, transportPath string, 
 	interfacePath = filepath.Join(tmpDir, "interface.cfg")
 	transportPath = filepath.Join(tmpDir, "transport.cfg")
 
-	err = ioutil.WriteFile(interfacePath, []byte(interfaceTemplate), 0644)
+	err = os.WriteFile(interfacePath, []byte(interfaceTemplate), 0644)
 
 	if err != nil {
 		return
 	}
 
-	err = ioutil.WriteFile(transportPath, []byte(transportTemplate), 0644)
+	err = os.WriteFile(transportPath, []byte(transportTemplate), 0644)
 
 	return
 }
@@ -311,7 +310,7 @@ func initOpenOCD() (openocd string, interfacePath string, transportPath string, 
 // Overwrites CUSTOMER[31] register to achieve the effects of
 // `AT+UPRODLFCLK=0,16,2`.
 func patchUICR(inputPath string) (outputPath string, err error) {
-	uicr, err := ioutil.ReadFile(inputPath)
+	uicr, err := os.ReadFile(inputPath)
 
 	if err != nil {
 		return
@@ -320,7 +319,7 @@ func patchUICR(inputPath string) (outputPath string, err error) {
 	outputPath = inputPath + "-patched"
 
 	copy(uicr[customer31Offset:], []byte{0x80, 0x04, 0x00, 0x80})
-	err = ioutil.WriteFile(outputPath, uicr[:], 0644)
+	err = os.WriteFile(outputPath, uicr[:], 0644)
 
 	return
 }
@@ -379,7 +378,7 @@ func Flash(flashPath string, uicrPath string) (err error) {
 // is created before overwriting them. The update also performs the operation
 // described in FlashSetInternalRCLFCK.
 func Update(updateFile string) (err error) {
-	tmpDir, err := ioutil.TempDir("", "update-")
+	tmpDir, err := os.MkdirTemp("", "update-")
 
 	if err != nil {
 		return

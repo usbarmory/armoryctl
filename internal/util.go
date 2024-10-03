@@ -13,6 +13,7 @@ package armoryctl
 import (
 	"archive/zip"
 	"bytes"
+	"errors"
 	"fmt"
 	"io"
 	"log"
@@ -86,7 +87,6 @@ func UnzipFile(src string, dst string) (err error) {
 			}
 
 			_ = output.Close()
-			//lint:ignore SA1019 incorrectly matches zip:*FileHeader.ModTime()
 			_ = os.Chtimes(dstPath, f.ModTime(), f.ModTime())
 		}
 	}
@@ -127,7 +127,7 @@ func ExecCommand(cmd string, args []string, root bool, input string) (output str
 	err = c.Run()
 
 	if err != nil {
-		err = fmt.Errorf(stderr.String())
+		err = errors.New(stderr.String())
 	}
 
 	return stdout.String(), err
