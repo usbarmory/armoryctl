@@ -8,10 +8,10 @@ Authors
 =======
 
 Andrea Barisani  
-andrea.barisani@withsecure.com | andrea@inversepath.com  
+andrea@inversepath.com  
 
 Daniele Bianco  
-daniele.bianco@withsecure.com | daniele@inversepath.com  
+daniele@inversepath.com  
 
 Introduction
 ============
