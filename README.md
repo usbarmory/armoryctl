@@ -2,7 +2,7 @@ USB armory Mk II - hardware control tool
 ========================================
 
 armoryctl | https://github.com/usbarmory/armoryctl  
-Copyright (c) WithSecure Corporation
+Copyright (c) The armoryctl authors. All Rights Reserved.
 
 Authors
 =======
@@ -146,7 +146,7 @@ License
 =======
 
 armoryctl | https://github.com/usbarmory/armoryctl  
-Copyright (c) WithSecure Corporation
+Copyright (c) The armoryctl authors. All Rights Reserved.
 
 These source files are distributed under the BSD-style license found in the
 [LICENSE](https://github.com/usbarmory/armoryctl/blob/master/LICENSE) file.
